@@ -42,7 +42,7 @@ sent in via `stdin` or passed as files on the command line.
 
 ## Using Pushover
 
-Pushes are sent to your device(s) via [pushover.net][pe]. Head over to 
+Pushes are sent to your device(s) via [pushover.net][po]. Head over to 
 their site and follow the instructions to set this up.
 
 Once you know your User and API Token (long hex strings), export them in 
