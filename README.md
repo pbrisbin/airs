@@ -12,8 +12,8 @@ The `airs` utility is designed to do this. It sources
 watch list, then sends you a push notification via [pushover.net][po] if 
 any shows you watch have a new episode airing tonight.
 
-[ne] http://next-episode.net
-[po] https://pushover.net
+[ne]: http://next-episode.net
+[po]: https://pushover.net
 
 ## The Watchlist
 
