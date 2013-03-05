@@ -1,35 +1,37 @@
-require 'curb'
+require 'net/https'
 
 module Airs
   class Push
-    API= 'https://api.pushover.net/1/messages'
+    URL   = 'https://api.pushover.net/1/messages.json'
+    TOKEN = '2mFVOz9QhQKdUipmVnARrA38z6lfQv'
 
     def initialize(message)
       @message = message
     end
 
     def send!
-      Curl::Easy.http_post(API, *post_fields)
+      http_post(URI.parse(URL), token: TOKEN, user: user, message: message)
+    rescue
+      raise "Error accessing pushover.net"
     end
 
     private
 
-    attr_reader :message
+    attr_reader :message # !> private attribute?
+
+    def http_post(uri, fields)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+
+      req = Net::HTTP::Post.new(uri.path)
+      req.set_form_data(fields)
+
+      http.start { |sess| sess.request(req) }
+    end
 
     def user
       ENV.fetch('PUSHOVER_USER') { raise "PUSHOVER_USER not set" }
-    end
-
-    def token
-      ENV.fetch('PUSHOVER_TOKEN') { raise "PUSHOVER_TOKEN not set" }
-    end
-
-    def post_fields
-      {
-        'user'    => user,
-        'token'   => token,
-        'message' => message
-      }.map { |k,v| Curl::PostField.content(k, v) }
     end
 
   end
