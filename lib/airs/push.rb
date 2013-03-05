@@ -17,7 +17,7 @@ module Airs
 
     private
 
-    attr_reader :message # !> private attribute?
+    attr_reader :message
 
     def http_post(uri, fields)
       http = Net::HTTP.new(uri.host, uri.port)
