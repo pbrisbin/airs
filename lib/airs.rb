@@ -8,7 +8,7 @@ module Airs
       list   = WatchList.new
       source = NextEpisode.new
 
-      argf.lines { |line| list << line.strip }
+      argf.lines { |line| list << line }
 
       titles   = source.todays_titles
       watching = titles.select { |t| list.match?(t) }

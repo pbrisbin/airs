@@ -2,7 +2,7 @@ module Airs
   class WatchList
 
     def <<(pattern)
-      patterns << Regexp.new(/#{pattern}/i)
+      patterns << Regexp.new(/#{pattern.strip}/i)
     end
 
     def match?(title)
