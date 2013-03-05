@@ -65,7 +65,7 @@ will be matched against the show titles as reported by
 [next-episode.net][ne]. You have the full power of regular expressions, 
 though it's usually not needed.
 
-The match is partial case insensitive:
+The match is partial and case insensitive:
 
 ~~~
 walking dead
