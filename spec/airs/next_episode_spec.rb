@@ -1,16 +1,13 @@
 require 'spec_helper'
-require 'fakeweb'
+require 'webmock/rspec'
 
 module Airs
   describe NextEpisode do
-    before { FakeWeb.allow_net_connect = false }
-    after  { FakeWeb.clean_registry }
-
     it "downloads todays titles from next-episode" do
       file    = File.expand_path('../../files/next-episode.html', __FILE__)
       content = File.read(file)
 
-      FakeWeb.register_uri(:get, 'http://next-episode.net', :body => content)
+      stub_request(:get, 'http://next-episode.net').to_return(:body => content)
 
       subject.todays_titles.should =~ ["90210", "Adventure Time",
         "Alaska State Troopers", "American Pickers", "Bang Goes the Theory",
