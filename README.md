@@ -34,6 +34,7 @@ The Walking Dead
 Boardwalk Empire
 EOF
 ~~~
+
 However, this can get tedious. It's recommended to set your Pushover 
 User Key in a shell rc file:
 
@@ -48,7 +49,6 @@ And pass the watchlist via a file argument:
 ~~~
 $ echo 'Show One' >  watchlist.txt
 $ echo 'Show Two' >> watchlist.txt
-$
 $ airs watchlist.txt
 ~~~
 
@@ -73,7 +73,7 @@ gold rush
 ~~~
 
 The first line will match "The Walking Dead" just fine. The second line 
-would match both "Gold Rush" and "God Rush Live". To avoid this, use a 
+would match both "Gold Rush" and "Gold Rush Live". To avoid this, use a 
 regular expression *anchor*:
 
 ~~~
@@ -83,22 +83,11 @@ gold rush$
 
 Will ensure only "Gold Rush" is matched.
 
-The watch list can be sent in via `stdin` or passed as files on the 
-command line:
-
-~~~
-$ echo "Pattern" | airs
-$ airs < watchlist.txt
-$ airs watchlist.txt
-~~~
-
-Are all fine.
-
 ## Pushover
 
 Push notifications are sent to your device via [pushover.net][po]. Head 
 over to their site and sign up. They'll give you a User Key which you 
-must set as the environment variable `PUSHOVER_USER` for airs to work.
+must set as the environment variable `PUSHOVER_USER` for `airs` to work.
 
 As seen in the Usage section, this can be passed along the commandline 
 or `export`ed ahead of time via your shell rc file.
