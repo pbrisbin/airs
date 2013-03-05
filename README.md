@@ -58,6 +58,9 @@ Finally, we can put this in cron to have it run each day:
 00 17 * * * airs /path/to/watchlist.txt # 5PM
 ~~~
 
+Note that, depending on which cron app you use, you may need to define 
+the `PUSHOVER_USER` environment variable in your crontab as well.
+
 ## The Watchlist
 
 The watch list is a simple list of patterns, one per line. Each pattern 
