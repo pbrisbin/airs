@@ -12,5 +12,13 @@ module Airs
       subject.match?("Biz Buz").should be_false
       subject.match?("The Baz Bat 2").should be_false
     end
+
+    it "should handle odd quoting" do
+      subject << "That's All Folks"
+      subject << 'Hey, "What"'
+
+      subject.match?("That's All Folks").should be_true
+      subject.match?('Hey, "What"').should be_true
+    end
   end
 end
