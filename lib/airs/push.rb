@@ -10,7 +10,10 @@ module Airs
     end
 
     def send!
-      http_post(URI.parse(URL), token: TOKEN, user: user, message: message)
+      http_post(URI.parse(URL),
+                user: user,
+                token: TOKEN,
+                message: message)
     rescue
       raise "Error accessing pushover.net"
     end

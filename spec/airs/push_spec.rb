@@ -1,9 +1,23 @@
 require 'spec_helper'
+require 'webmock/rspec'
 
 module Airs
   describe Push do
-    # TODO: I don't want to Mock Net:HTTP (I don't own it), Fakeweb
-    # can't handle POST bodies, and I don't want to hit real internet...
-    it "sends pushes to pushover.net"
+    it "sends pushes to pushover.net" do
+      ENV['PUSHOVER_USER'] = 'ENV_USER'
+
+      body = {
+        user:    'ENV_USER',
+        token:   Push::TOKEN,
+        message: "A message"
+      }
+
+      req = stub_request(:post, Push::URL).with(body: body)
+
+      push = Push.new("A message")
+      push.send!
+
+      req.should have_been_requested
+    end
   end
 end
