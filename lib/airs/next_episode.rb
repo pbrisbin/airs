@@ -3,20 +3,19 @@ require 'nokogiri'
 
 module Airs
   class NextEpisode
-    URI = URI.parse('http://next-episode.net')
+    URL    = 'http://next-episode.net'
     HEADER = "Today's TV Episodes:"
 
     def todays_titles
-      doc    = Nokogiri::HTML(content)
-      header = doc.search('h5').detect { |e| e.inner_text == HEADER }
-      span   = header.parent.children.last
-      span.search('a').map(&:inner_text)
+      content = Net::HTTP.get(URI.parse(URL))
+
+      Nokogiri::HTML(content)
+        .search('h5').detect { |e| e.inner_text == HEADER }
+        .parent.children.last
+        .search('a').map(&:inner_text).uniq
+    rescue
+      raise "Error accessing or parsing next-episode.com"
     end
 
-    private
-
-    def content
-      @content ||= Net::HTTP.get(URI)
-    end
   end
 end
