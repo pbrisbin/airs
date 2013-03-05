@@ -9,6 +9,8 @@ module Airs
       ])
 
       NextEpisode.stub(:new).and_return(source)
+
+      subject.stub(:puts)
     end
 
     it "should push when shows are airing" do
