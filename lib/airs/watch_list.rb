@@ -9,6 +9,10 @@ module Airs
       patterns.any? { |p| title =~ p }
     end
 
+    def size
+      patterns.size
+    end
+
     private
 
     def patterns

@@ -13,9 +13,15 @@ module Airs
       titles   = source.todays_titles
       watching = titles.select { |t| list.match?(t) }
 
+      puts "[+] Patterns: #{list.size}",
+           "[+] Matched:  #{watching.size}/#{titles.size}"
+
       if watching.any?
-        push = Push.new("Airs today: #{watching.join(', ')}")
-        push.send!
+        message = "Airs today: #{watching.join(', ')}"
+
+        puts "[!] #{message}"
+
+        Push.new(message).send!
       end
 
     rescue => ex
