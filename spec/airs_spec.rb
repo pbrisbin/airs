@@ -1,33 +1,24 @@
 require 'spec_helper'
+require 'webmock/rspec'
 
 module Airs
   describe Main do
-    def run(patterns)
-      subject.run(patterns.join("\n"))
-    end
-
     before do
-      subject.stub(:puts)
+      file    = File.expand_path('../files/next-episode.html', __FILE__)
+      content = File.read(file)
 
-      source = double("Next episode source",
-                      :todays_titles => %w( Foo Biz Bar Buz Baz ))
+      stub_request(:get, 'http://next-episode.net').to_return(:body => content)
 
-      NextEpisode.stub(:new).and_return(source)
+      ENV['PUSHOVER_USER'] = 'User key'
     end
 
-    it "should push when shows are airing" do
-      push = double("Push")
-      push.should_receive(:send!)
+    it "should notify via pushover for shows we watch" do
+      pushover = double("Pushover")
+      pushover.should_receive(:notify).with('User key', 'Airs today: American Pickers, Eastenders')
+      Pushover.should_receive(:new).with('2mFVOz9QhQKdUipmVnARrA38z6lfQv').and_return(pushover)
 
-      Push.should_receive(:new).with("Airs today: Foo, Bar, Baz").and_return(push)
-
-      run %w( foo ba.* )
+      subject.run("american pickers\neastenders\n")
     end
 
-    it "should not push when shows aren't airing" do
-      Push.should_not_receive(:new)
-
-      run %w( flim flam )
-    end
   end
 end
