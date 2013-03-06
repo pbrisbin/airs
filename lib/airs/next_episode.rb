@@ -18,8 +18,9 @@ module Airs
         .parent.children.last
         .search('a').map(&:inner_text).uniq 
         .select { |t| watchlist.match?(t) }
-    rescue
-      raise "Error accessing or parsing next-episode.com"
+    rescue => ex
+      $stderr.puts "Error accessing or parsing next-episode.net"
+      raise ex
     end
 
     private
