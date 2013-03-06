@@ -14,10 +14,12 @@ module Airs
       content = Net::HTTP.get(URI.parse(URL))
 
       Nokogiri::HTML(content)
-        .search('h5').detect { |e| e.inner_text == HEADER }
+        .search('h5')
+        .detect { |e| e.inner_text == HEADER }
         .parent.children.last
-        .search('a').map(&:inner_text).uniq 
+        .search('a').map(&:inner_text).uniq
         .select { |t| watchlist.match?(t) }
+
     rescue => ex
       $stderr.puts "Error accessing or parsing next-episode.net"
       raise ex

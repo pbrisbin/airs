@@ -22,6 +22,7 @@ class Pushover
     })
 
     http.start { |sess| sess.request(req) }
+
   rescue => ex
     $stderr.puts "Error accessing api.pushover.net"
     raise ex
