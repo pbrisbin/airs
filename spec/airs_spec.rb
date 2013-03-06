@@ -15,7 +15,7 @@ module Airs
     it "should notify via pushover for shows we watch" do
       pushover = double("Pushover")
       pushover.should_receive(:notify).with('User key', 'Airs today: American Pickers, Eastenders')
-      Pushover.should_receive(:new).with('2mFVOz9QhQKdUipmVnARrA38z6lfQv').and_return(pushover)
+      Pushover.should_receive(:new).with(Main::PUSHOVER_TOKEN).and_return(pushover)
 
       subject.run("american pickers\neastenders\n")
     end
