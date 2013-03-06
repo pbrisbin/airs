@@ -6,16 +6,25 @@ module Airs
     URL    = 'http://next-episode.net'
     HEADER = "Today's TV Episodes:"
 
-    def todays_titles
+    def initialize(watchlist)
+      @watchlist = watchlist
+    end
+
+    def airs_today
       content = Net::HTTP.get(URI.parse(URL))
 
       Nokogiri::HTML(content)
         .search('h5').detect { |e| e.inner_text == HEADER }
         .parent.children.last
-        .search('a').map(&:inner_text).uniq
+        .search('a').map(&:inner_text).uniq 
+        .select { |t| watchlist.match?(t) }
     rescue
       raise "Error accessing or parsing next-episode.com"
     end
+
+    private
+
+    attr_reader :watchlist
 
   end
 end

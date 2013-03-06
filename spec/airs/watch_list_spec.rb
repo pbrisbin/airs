@@ -3,22 +3,20 @@ require 'spec_helper'
 module Airs
   describe WatchList do
     it "should hold and match string patterns" do
-      subject << "foo.*bar"
-      subject << "baz bat$"
+      list = WatchList.new("foo.*bar\nbaz bat$\n")
 
-      subject.match?("Foo and Bar").should be_true
-      subject.match?("The Baz Bat").should be_true
+      list.match?("Foo and Bar").should be_true
+      list.match?("The Baz Bat").should be_true
 
-      subject.match?("Biz Buz").should be_false
-      subject.match?("The Baz Bat 2").should be_false
+      list.match?("Biz Buz").should be_false
+      list.match?("The Baz Bat 2").should be_false
     end
 
     it "should handle odd quoting" do
-      subject << "That's All Folks"
-      subject << 'Hey, "What"'
+      list = WatchList.new("That's It\nHey \"What\"\n")
 
-      subject.match?("That's All Folks").should be_true
-      subject.match?('Hey, "What"').should be_true
+      list.match?("That's It").should be_true
+      list.match?('Hey "What"').should be_true
     end
   end
 end
