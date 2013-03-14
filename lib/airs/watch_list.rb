@@ -2,7 +2,7 @@ module Airs
   class WatchList
 
     def initialize(io)
-      io.lines do |line|
+      io.each_line do |line|
         patterns << Regexp.new(/#{line.strip}/i)
       end
     end
